@@ -1,5 +1,5 @@
 import type { AppState } from '../types';
-import { CF_ASNS, REGIONS, COUNTRY_MAP, CHINESE_TO_CODE_MAP } from '../data/constants';
+import { CF_ASNS, COUNTRY_MAP, CHINESE_TO_CODE_MAP } from '../data/constants';
 import { PROVIDERS } from '../data/providers';
 
 // Helper to parse comma/space separated string to unique numbers
