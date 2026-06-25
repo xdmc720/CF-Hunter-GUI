@@ -107,32 +107,32 @@ export const generateCensysQuery = (state: AppState): string => {
   // Services Wrapper
   const serviceParts: string[] = [];
   
-  // Base CF filter for Censys
-  serviceParts.push(`http.response.headers: (key="Server" and value="cloudflare")`);
+  // Base CF filter for Censys Platform
+  serviceParts.push(`endpoints.http.headers:(key="Server" and value="cloudflare")`);
   
   if (state.signature === '1003') {
-    serviceParts.push(`http.response.body: "Direct IP access not allowed"`);
+    serviceParts.push(`endpoints.http.body:"Direct IP access not allowed"`);
   } else {
-    serviceParts.push(`http.response.status_code=403`);
+    serviceParts.push(`endpoints.http.status_code=403`);
   }
 
   const customPortsParsed = parseNumbers(state.customPorts);
   const allPorts = Array.from(new Set([...state.ports, ...customPortsParsed]));
   if (allPorts.length > 0) {
-    const portQueries = allPorts.map(p => `port=${p}`);
-    serviceParts.push(`(${portQueries.join(' or ')})`);
+    const portStrings = allPorts.map(p => `"${p}"`);
+    serviceParts.push(`port:{${portStrings.join(', ')}}`);
   }
 
-  parts.push(`services: (${serviceParts.join(' and ')})`);
+  parts.push(`host.services:(${serviceParts.join(' and ')})`);
 
   // IPv4 Only
   if (state.ipv4Only) {
-    parts.push(`ip: 0.0.0.0/0`);
+    parts.push(`host.ip: "0.0.0.0/0"`);
   }
 
   // Time
   if (state.timeWindow !== 'all') {
-    parts.push(`last_updated_at >= "now-${state.timeWindow}d"`);
+    parts.push(`host.last_updated_at >= "now-${state.timeWindow}d"`);
   }
 
   // Regions
@@ -151,7 +151,7 @@ export const generateCensysQuery = (state: AppState): string => {
       }
     });
     if (censysRegions.length > 0) {
-      const regionQueries = Array.from(new Set(censysRegions)).map(r => `location.country="${r}"`);
+      const regionQueries = Array.from(new Set(censysRegions)).map(r => `host.location.country_code="${r}"`);
       parts.push(`(${regionQueries.join(' or ')})`);
     }
   }
@@ -168,8 +168,8 @@ export const generateCensysQuery = (state: AppState): string => {
   const customIncludeAsnsParsed = parseNumbers(state.customIncludeAsns);
   const allAsns = Array.from(new Set([...selectedProviderAsns, ...customIncludeAsnsParsed]));
   if (allAsns.length > 0) {
-    const asnQueries = allAsns.map(a => `autonomous_system.asn=${a}`);
-    parts.push(`(${asnQueries.join(' or ')})`);
+    const asnStrings = allAsns.map(a => `"${a}"`);
+    parts.push(`host.autonomous_system.asn:{${asnStrings.join(', ')}}`);
   }
 
   // Exclude ASNs
@@ -182,7 +182,8 @@ export const generateCensysQuery = (state: AppState): string => {
   
   const uniqueExcludeAsns = Array.from(new Set(excludeAsns));
   if (uniqueExcludeAsns.length > 0) {
-    parts.push(`not autonomous_system.asn: {${uniqueExcludeAsns.join(', ')}}`);
+    const excludeStrings = uniqueExcludeAsns.map(a => `"${a}"`);
+    parts.push(`not host.autonomous_system.asn:{${excludeStrings.join(', ')}}`);
   }
 
   return parts.join(' and ');
