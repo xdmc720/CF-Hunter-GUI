@@ -1,0 +1,87 @@
+### FOFA
+`server=="cloudflare" && port=="443" && header="Forbidden" && country=="代码"`
+
+**东亚（8个）**
+- 中国 (CN)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="CN"`
+- 日本 (JP)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="JP"`
+- 韩国 (KR)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="KR"`
+- 朝鲜 (KP)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="KP"`
+- 蒙古 (MN)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="MN"`
+- 台湾地区 (TW)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="TW"`
+- 香港地区 (HK)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="HK"`
+- 澳门地区 (MO)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="MO"`
+
+**东南亚（11个）**
+- 越南 (VN)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="VN"`
+- 泰国 (TH)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="TH"`
+- 新加坡 (SG)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="SG"`
+- 马来西亚 (MY)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="MY"`
+- 印度尼西亚 (ID)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="ID"`
+- 菲律宾 (PH)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="PH"`
+- 缅甸 (MM)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="MM"`
+- 老挝 (LA)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="LA"`
+- 柬埔寨 (KH)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="KH"`
+- 文莱 (BN)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="BN"`
+- 东帝汶 (TL)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="TL"`
+
+**中亚（5个）**
+- 哈萨克斯坦 (KZ)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="KZ"`
+- 吉尔吉斯斯坦 (KG)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="KG"`
+- 塔吉克斯坦 (TJ)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="TJ"`
+- 土库曼斯坦 (TM)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="TM"`
+- 乌兹别克斯坦 (UZ)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="UZ"`
+
+**南亚（8个）**
+- 印度 (IN)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="IN"`
+- 巴基斯坦 (PK)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="PK"`
+- 孟加拉国 (BD)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="BD"`
+- 斯里兰卡 (LK)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="LK"`
+- 尼泊尔 (NP)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="NP"`
+- 不丹 (BT)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="BT"`
+- 马尔代夫 (MV)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="MV"`
+- 阿富汗 (AF)：`server=="cloudflare" && port=="443" && header="Forbidden" && country=="AF"`
+
+---
+
+### censys
+`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "英文名"`
+
+**东亚（8个）**
+- 中国 (China)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "China"`
+- 日本 (Japan)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Japan"`
+- 韩国 (South Korea)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "South Korea"`
+- 朝鲜 (North Korea)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "North Korea"`
+- 蒙古 (Mongolia)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Mongolia"`
+- 台湾地区 (Taiwan)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Taiwan"`
+- 香港地区 (Hong Kong)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Hong Kong"`
+- 澳门地区 (Macao)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Macao"`
+
+**东南亚（11个）**
+- 越南 (Vietnam)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Vietnam"`
+- 泰国 (Thailand)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Thailand"`
+- 新加坡 (Singapore)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Singapore"`
+- 马来西亚 (Malaysia)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Malaysia"`
+- 印度尼西亚 (Indonesia)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Indonesia"`
+- 菲律宾 (Philippines)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Philippines"`
+- 缅甸 (Myanmar)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Myanmar"`
+- 老挝 (Laos)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Laos"`
+- 柬埔寨 (Cambodia)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Cambodia"`
+- 文莱 (Brunei)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Brunei"`
+- 东帝汶 (East Timor)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "East Timor"`
+
+**中亚（5个）**
+- 哈萨克斯坦 (Kazakhstan)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Kazakhstan"`
+- 吉尔吉斯斯坦 (Kyrgyzstan)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Kyrgyzstan"`
+- 塔吉克斯坦 (Tajikistan)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Tajikistan"`
+- 土库曼斯坦 (Turkmenistan)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Turkmenistan"`
+- 乌兹别克斯坦 (Uzbekistan)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Uzbekistan"`
+
+**南亚（8个）**
+- 印度 (India)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "India"`
+- 巴基斯坦 (Pakistan)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Pakistan"`
+- 孟加拉国 (Bangladesh)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Bangladesh"`
+- 斯里兰卡 (Sri Lanka)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Sri Lanka"`
+- 尼泊尔 (Nepal)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Nepal"`
+- 不丹 (Bhutan)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Bhutan"`
+- 马尔代夫 (Maldives)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Maldives"`
+- 阿富汗 (Afghanistan)：`host.services.port = 443 and host.services.endpoints.http.status_code = "403" and host.services.endpoints.http.headers: (key = "Server" and value: "cloudflare") and host.location.country = "Afghanistan"`
