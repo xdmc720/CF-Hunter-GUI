@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const RegionSelector: React.FC<Props> = ({ selectedRegions, customRegions, onToggle, onToggleGroup, onCustomChange }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl p-6 rounded-2xl shadow-xl shadow-slate-200/40 dark:shadow-none border border-white/60 dark:border-slate-700/50 relative z-10 transition-all hover:shadow-2xl hover:shadow-slate-200/50">
