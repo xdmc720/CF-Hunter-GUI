@@ -1,5 +1,5 @@
 import { useReducer, useEffect, useState } from 'react';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 import { Network, Moon, Sun, Clock } from 'lucide-react';
 import { appReducer } from './store/useAppReducer';
 import { defaultState } from './types';
@@ -46,6 +46,30 @@ function App() {
   const loadHistory = (hState: any) => {
     dispatch({ type: 'LOAD_STATE', payload: { ...defaultState, ...hState } });
     setShowHistory(false);
+  };
+
+  const handleSavePreset = () => {
+    try {
+      localStorage.setItem('cf_hunter_user_preset', JSON.stringify(state));
+      toast.success('绝密配方已安全保存在本地！', { icon: '💾' });
+    } catch (e) {
+      toast.error('保存失败');
+    }
+  };
+
+  const handleLoadPreset = () => {
+    const saved = localStorage.getItem('cf_hunter_user_preset');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        dispatch({ type: 'LOAD_STATE', payload: parsed });
+        toast.success('已载入您的专属配方！', { icon: '📂' });
+      } catch (e) {
+        toast.error('读取失败：配置文件损坏');
+      }
+    } else {
+      toast.error('未找到保存的配方，请先调好参数并点击保存！');
+    }
   };
 
   return (
@@ -149,6 +173,13 @@ function App() {
             <button onClick={() => dispatch({ type: 'LOAD_STATE', payload: { ...defaultState, signature: '403', timeWindow: '30' } })} className="px-3 py-1.5 text-sm bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 rounded-full hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition font-medium">
               盲扫 (403放宽)
             </button>
+            <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1 hidden sm:block"></div>
+            <button onClick={handleSavePreset} className="px-3 py-1.5 text-sm bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition font-medium flex items-center">
+              💾 保存配方
+            </button>
+            <button onClick={handleLoadPreset} className="px-3 py-1.5 text-sm bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 rounded-full hover:bg-amber-100 dark:hover:bg-amber-900/50 transition font-medium flex items-center">
+              📂 读取配方
+            </button>
           </div>
         </div>
 
@@ -174,10 +205,12 @@ function App() {
             <PortSelector 
               selectedPorts={state.ports}
               customPorts={state.customPorts}
+              excludePorts={state.excludePorts}
               onToggle={(p) => dispatch({ type: 'TOGGLE_PORT', payload: p })}
               onToggleGroup={(ps, s) => dispatch({ type: 'TOGGLE_PORT_GROUP', payload: { ports: ps, selected: s } })}
               onClear={() => dispatch({ type: 'CLEAR_PORTS' })}
               onCustomChange={(val) => dispatch({ type: 'SET_CUSTOM_PORTS', payload: val })}
+              onExcludeChange={(val) => dispatch({ type: 'SET_EXCLUDE_PORTS', payload: val })}
             />
 
             <AdvancedPanel 
