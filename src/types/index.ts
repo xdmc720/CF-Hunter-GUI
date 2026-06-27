@@ -9,6 +9,7 @@ export interface AppState {
   customAsns: string; // comma/space separated
   ports: number[];
   customPorts: string; // comma/space separated
+  excludePorts: string; // ports to exclude
   signature: '1003' | '403';
   ipv4Only: boolean;
   excludeDomain: boolean;
@@ -25,6 +26,7 @@ export const defaultState: AppState = {
   customAsns: '',
   ports: [443],
   customPorts: '',
+  excludePorts: '',
   signature: '403',
   ipv4Only: false,
   excludeDomain: false,
