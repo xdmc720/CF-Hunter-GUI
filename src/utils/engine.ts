@@ -98,6 +98,13 @@ export const generateFofaQuery = (state: AppState): string => {
     parts.push(`(${excludeQueries.join(' && ')})`);
   }
 
+  // Exclude Ports
+  const parsedExcludePorts = parseNumbers(state.excludePorts);
+  if (parsedExcludePorts.length > 0) {
+    const excludePortQueries = parsedExcludePorts.map(p => `port!="${p}"`);
+    parts.push(`(${excludePortQueries.join(' && ')})`);
+  }
+
   return parts.join(' && ');
 };
 
@@ -128,6 +135,11 @@ export const generateCensysQuery = (state: AppState): string => {
   // IPv4 Only
   if (state.ipv4Only) {
     parts.push(`host.ip: "0.0.0.0/0"`);
+  }
+
+  // Exclude Domain (Pure IP)
+  if (state.excludeDomain) {
+    parts.push(`not name: *`);
   }
 
   // Time
@@ -184,6 +196,13 @@ export const generateCensysQuery = (state: AppState): string => {
   if (uniqueExcludeAsns.length > 0) {
     const excludeStrings = uniqueExcludeAsns.map(a => `"${a}"`);
     parts.push(`not host.autonomous_system.asn:{${excludeStrings.join(', ')}}`);
+  }
+
+  // Exclude Ports
+  const parsedExcludePorts = parseNumbers(state.excludePorts);
+  if (parsedExcludePorts.length > 0) {
+    const excludePortStrings = parsedExcludePorts.map(p => `"${p}"`);
+    parts.push(`not host.services.port:{${excludePortStrings.join(', ')}}`);
   }
 
   return parts.join(' and ');
