@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PROVIDERS } from '../data/providers';
-import { Info, ChevronDown, ChevronUp, BookOpen, Plus } from 'lucide-react';
+import { Info, ChevronDown, ChevronUp, BookOpen } from 'lucide-react';
 import { RoutingDictionaryModal } from './RoutingDictionaryModal';
 
 interface Props {
@@ -10,24 +10,9 @@ interface Props {
   onCustomChange: (val: string) => void;
 }
 
-const PREMIUM_ROUTES = [
-  { name: '移动 CMIN2', asn: '58807', color: 'text-blue-600 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-900/30 dark:border-blue-800 hover:bg-blue-100' },
-  { name: '移动 CMI', asn: '58453', color: 'text-sky-600 bg-sky-50 border-sky-200 dark:text-sky-400 dark:bg-sky-900/30 dark:border-sky-800 hover:bg-sky-100' },
-  { name: '电信 CN2 GIA', asn: '4809', color: 'text-indigo-600 bg-indigo-50 border-indigo-200 dark:text-indigo-400 dark:bg-indigo-900/30 dark:border-indigo-800 hover:bg-indigo-100' },
-  { name: '联通 9929', asn: '9929', color: 'text-orange-600 bg-orange-50 border-orange-200 dark:text-orange-400 dark:bg-orange-900/30 dark:border-orange-800 hover:bg-orange-100' },
-];
-
 export const AsnSelector: React.FC<Props> = ({ selectedProviders, customIncludeAsns, onToggle, onCustomChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handlePresetClick = (asn: string) => {
-    const current = customIncludeAsns.split(/[,，\s]+/).filter(Boolean);
-    if (!current.includes(asn)) {
-      current.push(asn);
-      onCustomChange(current.join(', '));
-    }
-  };
 
   return (
     <>
