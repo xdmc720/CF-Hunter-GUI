@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PROVIDERS } from '../data/providers';
-import { Info, ChevronDown, ChevronUp } from 'lucide-react';
+import { Info, ChevronDown, ChevronUp, BookOpen, Plus } from 'lucide-react';
+import { RoutingDictionaryModal } from './RoutingDictionaryModal';
 
 interface Props {
   selectedProviders: string[];
@@ -9,12 +10,29 @@ interface Props {
   onCustomChange: (val: string) => void;
 }
 
+const PREMIUM_ROUTES = [
+  { name: '移动 CMIN2', asn: '58807', color: 'text-blue-600 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-900/30 dark:border-blue-800 hover:bg-blue-100' },
+  { name: '移动 CMI', asn: '58453', color: 'text-sky-600 bg-sky-50 border-sky-200 dark:text-sky-400 dark:bg-sky-900/30 dark:border-sky-800 hover:bg-sky-100' },
+  { name: '电信 CN2 GIA', asn: '4809', color: 'text-indigo-600 bg-indigo-50 border-indigo-200 dark:text-indigo-400 dark:bg-indigo-900/30 dark:border-indigo-800 hover:bg-indigo-100' },
+  { name: '联通 9929', asn: '9929', color: 'text-orange-600 bg-orange-50 border-orange-200 dark:text-orange-400 dark:bg-orange-900/30 dark:border-orange-800 hover:bg-orange-100' },
+];
+
 export const AsnSelector: React.FC<Props> = ({ selectedProviders, customIncludeAsns, onToggle, onCustomChange }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handlePresetClick = (asn: string) => {
+    const current = customIncludeAsns.split(/[,，\s]+/).filter(Boolean);
+    if (!current.includes(asn)) {
+      current.push(asn);
+      onCustomChange(current.join(', '));
+    }
+  };
 
   return (
-    <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl p-6 rounded-2xl shadow-xl shadow-slate-200/40 dark:shadow-none border border-white/60 dark:border-slate-700/50 relative z-10 transition-all hover:shadow-2xl hover:shadow-slate-200/50">
-      <div 
+    <>
+      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl p-6 rounded-2xl shadow-xl shadow-slate-200/40 dark:shadow-none border border-white/60 dark:border-slate-700/50 relative z-10 transition-all hover:shadow-2xl hover:shadow-slate-200/50">
+        <div 
         className="flex items-center justify-between mb-6 cursor-pointer group"
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -30,14 +48,27 @@ export const AsnSelector: React.FC<Props> = ({ selectedProviders, customIncludeA
             </div>
           </h2>
           {selectedProviders.length === 0 && (
-            <span className="ml-3 text-sm px-2 py-1 bg-pink-100 dark:bg-pink-900/50 text-pink-700 dark:text-pink-300 rounded">
+            <span className="ml-3 text-sm px-2 py-1 bg-pink-100 dark:bg-pink-900/50 text-pink-700 dark:text-pink-300 rounded hidden sm:inline-block">
               不限 (全网撒网)
             </span>
           )}
         </div>
-        <button className="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
-          {isOpen ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-        </button>
+        <div className="flex items-center space-x-2 sm:space-x-3">
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsModalOpen(true);
+            }}
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-600 hover:bg-indigo-100 dark:bg-indigo-900/30 dark:text-indigo-400 dark:hover:bg-indigo-900/50 transition-colors border border-indigo-100 dark:border-indigo-800/50 shadow-sm"
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">极客路由图鉴</span>
+            <span className="sm:hidden">图鉴</span>
+          </button>
+          <button className="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+            {isOpen ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+          </button>
+        </div>
       </div>
 
       {isOpen && (
@@ -72,12 +103,14 @@ export const AsnSelector: React.FC<Props> = ({ selectedProviders, customIncludeA
               type="text"
               value={customIncludeAsns}
               onChange={(e) => onCustomChange(e.target.value)}
-              placeholder="例如：906, 54574 (用逗号或空格隔开)"
-              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pink-500 dark:text-slate-200 placeholder-slate-400"
+              placeholder="例如：906, 54574 (输入目标机房 ASN，非路由 ASN)"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pink-500 dark:text-slate-200 placeholder-slate-400 shadow-inner"
             />
           </div>
         </div>
       )}
-    </div>
+      </div>
+      <RoutingDictionaryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 };
