@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { AppState } from '../types';
 import { generateFofaQuery, generateCensysQuery, safeFofaBase64 } from '../utils/engine';
-import { Copy, Download } from 'lucide-react';
+import { Copy, Download, ExternalLink } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { saveHistory } from '../utils/storage';
 
@@ -56,9 +56,18 @@ export const PreviewBoard: React.FC<Props> = ({ state }) => {
     toast.success('已导出为 TXT');
   };
 
+  const handleJump = () => {
+    saveHistory(state);
+    if (state.engine === 'fofa') {
+      window.open(`https://fofa.info/result?qbase64=${encodeURIComponent(base64)}`, '_blank');
+    } else {
+      window.open(`https://search.censys.io/search?resource=hosts&q=${encodeURIComponent(query)}`, '_blank');
+    }
+  };
+
   return (
-    <div className="bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl shadow-blue-900/20 border border-slate-700/50 text-slate-300 relative z-10 overflow-hidden ring-1 ring-white/10">
-      <div className="flex items-center justify-between px-5 py-4 bg-slate-950/80 border-b border-slate-800/80">
+    <div className="bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl shadow-blue-900/20 border border-slate-700/50 text-slate-300 relative z-10 overflow-hidden ring-1 ring-white/10 flex flex-col">
+      <div className="flex flex-wrap items-center justify-between px-5 py-4 bg-slate-950/80 border-b border-slate-800/80 gap-3">
         <div className="flex items-center space-x-2">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
           <div className="w-3 h-3 rounded-full bg-amber-500"></div>
@@ -73,6 +82,9 @@ export const PreviewBoard: React.FC<Props> = ({ state }) => {
           </button>
           <button onClick={handleDownload} className="p-1.5 hover:bg-slate-800 rounded text-slate-400 hover:text-white transition" title="导出查询为 TXT">
             <Download className="w-4 h-4" />
+          </button>
+          <button onClick={handleJump} className="p-1.5 hover:bg-slate-800 rounded text-slate-400 hover:text-blue-400 transition" title="一键直达靶场 (需登录)">
+            <ExternalLink className="w-4 h-4" />
           </button>
         </div>
       </div>
