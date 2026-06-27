@@ -5,14 +5,16 @@ import { Info, ChevronDown, ChevronUp } from 'lucide-react';
 interface Props {
   selectedPorts: number[];
   customPorts: string;
+  excludePorts: string;
   onToggle: (port: number) => void;
   onToggleGroup: (ports: number[], selected: boolean) => void;
   onClear: () => void;
   onCustomChange: (val: string) => void;
+  onExcludeChange: (val: string) => void;
 }
 
 export const PortSelector: React.FC<Props> = ({ 
-  selectedPorts, customPorts, onToggle, onToggleGroup, onClear, onCustomChange 
+  selectedPorts, customPorts, excludePorts, onToggle, onToggleGroup, onClear, onCustomChange, onExcludeChange 
 }) => {
   const [isOpen, setIsOpen] = useState(false); // Closed by default
 
@@ -110,6 +112,34 @@ export const PortSelector: React.FC<Props> = ({
                 onChange={(e) => onCustomChange(e.target.value)}
                 placeholder="支持输入多个端口，用空格或逗号隔开，如：12345, 67890"
                 className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-slate-200 placeholder-slate-400"
+              />
+            </div>
+
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-700">
+              <h3 className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-2 flex items-center">
+                排除特定端口 (Exclude Ports)
+                <div className="group/excludetip relative ml-2">
+                  <Info className="w-4 h-4 text-rose-400 cursor-help transition-colors group-hover/excludetip:text-rose-500" />
+                  <div className="absolute left-0 bottom-full mb-3 hidden group-hover/excludetip:block w-72 p-3 bg-slate-800/95 backdrop-blur text-white text-xs rounded-xl shadow-2xl z-50 font-normal border border-slate-700 pointer-events-none">
+                    <div className="font-semibold text-rose-300 mb-1">避坑指南：为什么要排除特定端口？</div>
+                    <p className="opacity-90 leading-relaxed mb-1.5">
+                      真正的官方 Cloudflare 边缘节点是纯粹的 Web 缓存服务器，<strong>绝对不可能</strong>对外开放服务器的内网管理端口。
+                    </p>
+                    <p className="opacity-90 leading-relaxed">
+                      如果你扫到的节点开放了以下端口，它 100% 是别人的自建反代、建站 VPS 或者是蜜罐：<br/>
+                      • <strong>22</strong> (SSH 远程登录)<br/>
+                      • <strong>3389</strong> (Windows 远程桌面)<br/>
+                      • <strong>21</strong> (FTP 服务)
+                    </p>
+                  </div>
+                </div>
+              </h3>
+              <input
+                type="text"
+                value={excludePorts}
+                onChange={(e) => onExcludeChange(e.target.value)}
+                placeholder="强烈建议填入：22, 3389, 21 (过滤个人 VPS 和蜜罐)"
+                className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 dark:text-slate-200 placeholder-slate-400"
               />
             </div>
           </div>
