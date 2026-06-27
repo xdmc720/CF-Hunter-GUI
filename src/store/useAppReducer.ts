@@ -11,6 +11,7 @@ export type AppAction =
   | { type: 'TOGGLE_PORT_GROUP'; payload: { ports: number[], selected: boolean } }
   | { type: 'CLEAR_PORTS' }
   | { type: 'SET_CUSTOM_PORTS'; payload: string }
+  | { type: 'SET_EXCLUDE_PORTS'; payload: string }
   | { type: 'SET_CUSTOM_ASNS'; payload: string }
   | { type: 'SET_SIGNATURE'; payload: '1003' | '403' }
   | { type: 'TOGGLE_IPV4_ONLY' }
@@ -25,9 +26,7 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
     case 'SET_ENGINE':
       return { 
         ...state, 
-        engine: action.payload,
-        // Disable excludeDomain if switching to censys
-        excludeDomain: action.payload === 'censys' ? false : state.excludeDomain 
+        engine: action.payload
       };
     case 'TOGGLE_REGION':
       return {
@@ -78,6 +77,8 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
       return { ...state, ports: [], customPorts: '' };
     case 'SET_CUSTOM_PORTS':
       return { ...state, customPorts: action.payload };
+    case 'SET_EXCLUDE_PORTS':
+      return { ...state, excludePorts: action.payload };
     case 'SET_CUSTOM_ASNS':
       return { ...state, customAsns: action.payload };
     case 'SET_SIGNATURE':
